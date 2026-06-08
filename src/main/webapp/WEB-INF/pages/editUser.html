@@ -6,7 +6,6 @@
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/users/edit}" th:object="${user}">
-
     <input type="hidden" th:field="*{id}" id="id">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
@@ -15,6 +14,10 @@
     <input type="text" th:field="*{email}" id="email"/>
     <br/>
     <input type="submit" value="Edit"/>
+</form>
+<form th:method="DELETE" th:action="@{/users/delete}">
+    <input type="hidden" name="id" th:value="${user.getId()}">
+    <input type="submit" value="Delete">
 </form>
 </body>
 </html>
