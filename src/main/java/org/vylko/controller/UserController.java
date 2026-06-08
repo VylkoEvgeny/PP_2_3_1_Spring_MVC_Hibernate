@@ -3,10 +3,7 @@ package org.vylko.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.vylko.entity.User;
 import org.vylko.service.UserService;
 import java.util.List;
@@ -35,8 +32,33 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createNewUser(@ModelAttribute("user") User user) {
+    public String createNewUser(@RequestParam("name") String name,
+                                @RequestParam("email") String email) {
+        User user = new User(name, email);
         userService.save(user);
+        return "redirect:/users";
+    }
+
+//    @PostMapping("/create")
+//    public String createNewUser(@ModelAttribute("user") User user) {
+//        userService.save(user);
+//        return "redirect:/users";
+//    }
+
+    @GetMapping("/pageForEdit")
+    public String getPageForEditUser(Model model, @RequestParam("id") Long id) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "editUser";
+    }
+
+    @PatchMapping("/edit")
+    public String editUser(@RequestParam("name") String name,
+                           @RequestParam("email") String  email,
+                           @RequestParam("id") Long id) {
+        User user = new User(name, email);
+        user.setId(id);
+        userService.update(user);
         return "redirect:/users";
     }
 }
