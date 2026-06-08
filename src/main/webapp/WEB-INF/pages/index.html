@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:each="user : ${userList}">
-    <a th:text="${user.getName()}">userName</a>
+    <a th:href="@{users/pageForEdit(id=${user.getId()})}" th:text="${user.getName()}">userName</a>
 </div>
 <a href="users/new">Create!</a>
 </body>
