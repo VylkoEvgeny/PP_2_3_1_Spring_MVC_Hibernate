@@ -1,6 +1,9 @@
 package org.vylko.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
+
+import javax.servlet.Filter;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -26,4 +29,11 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{
+                new HiddenHttpMethodFilter()
+        };
+
+    }
 }
